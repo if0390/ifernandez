@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-10-23T17:06:23.741Z",
+        "reason": "Claude: false positive; full-bleed .hero-field/.p-media bands hold content in .wrap with 20-24px inline padding, verified in rendered screenshots at 390/768/1440"
+      }
+    ]
+  }
+}

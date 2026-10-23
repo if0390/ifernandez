@@ -1,724 +1,719 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-world="dream">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ibeth Fernandez — UX &amp; Game Designer</title>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="description" content="Ibeth Fernandez, UX and game designer. TeleRehab, Fractured Wonderland, The Final Bell and 3D work in Blender.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script>
+// Dream for every visitor; a switch made earlier in this visit is kept
+(function(){var d=document.documentElement;d.classList.add('js');try{if(sessionStorage.getItem('world')==='nightmare')d.dataset.world='nightmare'}catch(e){}})();
+</script>
 <style>
+/* WORLD TOKENS: Dream is the default, Nightmare replaces the same roles.
+   Dream gets its weight from saturation and scale: rose ground, solid cherry fields, heavy plum ink. */
 :root{
-  --bg:#0a0a0b;--surface:#131315;--surface2:#1a1a1e;--surface3:#222228;
-  --text:#e4e4e7;--text2:#a1a1aa;--text3:#71717a;
-  --accent:#c084fc;--accent2:#a855f7;--accent-glow:rgba(192,132,252,.12);
-  --warm:#fbbf24;--warm-glow:rgba(251,191,36,.08);
-  --teal:#2dd4bf;--rose:#fb7185;
-  --radius:16px;--radius-sm:10px;
+  --bg:#f2a1b4;--surface:#fff8f2;--field:#d1184a;
+  --ink:#1f0a15;--muted:#4a1f33;
+  --cherry:#e0234e;--cherry-ink:#ffffff;--cherry-text:#6a0b27;
+  --btn-bg:var(--ink);--btn-ink:var(--bg);--mark:var(--cherry-text);
+  --field-ink:#ffffff;--field-link:#ffffff;
+  --frame:#1f0a15;--ring:3px;--line:rgba(31,10,21,.25);
+  --contact-bg:var(--ink);--contact-ink:var(--bg);
+  --w-body:500;--w-display:900;
+  /* Type: storybook display, clean text, mono for Nightmare's interface voice */
+  --display:'Cinzel Decorative',Georgia,serif;
+  --text:'Figtree',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --step-small:clamp(.875rem,.85rem + .1vw,.9375rem);
+  --step-body:clamp(1.0625rem,1rem + .25vw,1.1875rem);
+  --step-lead:clamp(1.25rem,1.1rem + .7vw,1.625rem);
+  --step-head:clamp(2.1rem,1rem + 4.4vw,5rem);
+  --step-display:clamp(3.1rem,.9rem + 7.6vw,8rem);
+  /* Frame */
+  --wrap:1040px;--margin:clamp(20px,3vw,24px);
+  --gap:16px;--section:clamp(88px,10vw,160px);
+  --pad:10px;--edge:clamp(28px,5vw,64px);
+  --spring:cubic-bezier(.34,1.56,.64,1);
+  --swing:cubic-bezier(.65,0,.35,1);
 }
+:root[data-world=nightmare]{
+  --bg:#120b10;--surface:#1d1219;--field:#2a0f1a;
+  --ink:#f6e9ee;--muted:#b39aa6;
+  --cherry:#ff2d5a;--cherry-ink:#120b10;--cherry-text:#ff4a70;
+  --btn-bg:var(--cherry);--btn-ink:var(--cherry-ink);--mark:var(--cherry);
+  --field-ink:var(--ink);--field-link:var(--cherry-text);
+  --frame:#ff2d5a;--ring:2px;--line:rgba(246,233,238,.22);
+  --contact-bg:var(--field);--contact-ink:var(--ink);
+  --w-body:400;--w-display:700;
+  --step-head:clamp(2.1rem,1.3rem + 3vw,4rem);
+  --step-display:clamp(2.7rem,1rem + 6.2vw,6.25rem);
+}
+:root[data-world=nightmare] .v-d,:root:not([data-world=nightmare]) .v-n{display:none}
+
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--surface3) var(--bg)}
-::selection{background:var(--accent);color:var(--bg)}
-body{font-family:'Bricolage Grotesque',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.65}
-a{color:var(--accent);text-decoration:none;transition:all .2s}
-a:hover{color:var(--warm)}
-img{max-width:100%;display:block}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+::selection{background:var(--cherry);color:var(--cherry-ink)}
+body{font-family:var(--text);font-size:var(--step-body);line-height:1.55;font-weight:var(--w-body);background:var(--bg);color:var(--ink);overflow-x:hidden}
+img,video{max-width:100%;display:block}
+a{color:var(--cherry-text);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:3px solid var(--cherry-text);outline-offset:3px;border-radius:6px}
+:root[data-world=nightmare] :focus-visible{outline:2px dashed var(--cherry);border-radius:0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:var(--margin)}
+h1,h2,h3{font-family:var(--display);font-weight:var(--w-display);line-height:1.05;letter-spacing:0}
+h2{font-size:var(--step-head);margin-bottom:24px}
+h3{font-size:var(--step-head)}
+h4{font-size:var(--step-lead);font-weight:700;line-height:1.2;margin-bottom:12px}
+:root[data-world=nightmare] h4{font:600 var(--step-small)/1.3 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--cherry-text)}
+p+p{margin-top:1em}
 
-/* NOISE OVERLAY */
-body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.4}
+/* BUTTONS: a menu plate in Dream (inner rule, a solid base it presses into), a chamfered plate in Nightmare */
+.btn{--plate:inset 0 0 0 3px var(--btn-bg),inset 0 0 0 4.5px var(--btn-ink);display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:12px 26px;border:0;background:var(--btn-bg);color:var(--btn-ink);font:700 var(--step-body)/1 var(--text);text-decoration:none;border-radius:10px;cursor:pointer;box-shadow:var(--plate),0 4px 0 var(--field);transition:transform .25s var(--spring),box-shadow .25s,background-color .2s,color .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--plate),0 6px 0 var(--field)}
+.btn:active{transform:translateY(4px);box-shadow:var(--plate),0 0 0 var(--field)}
+:root[data-world=nightmare] .btn{border-radius:0;box-shadow:none;clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);font:600 .875rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase}
+:root[data-world=nightmare] .btn:hover{transform:none;box-shadow:none;background:var(--ink);color:var(--bg)}
+:root[data-world=nightmare] .btn:active{transform:scale(.97);box-shadow:none}
 
-/* NAV */
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 6%;display:flex;justify-content:space-between;align-items:center;transition:all .35s}
-.nav.scrolled{background:rgba(10,10,11,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);padding:14px 6%}
-.nav-logo{font-family:'Instrument Serif',serif;font-size:24px;font-style:italic;color:var(--text);letter-spacing:-.5px}
-.nav-logo span{color:var(--accent)}
-.nav-links{display:flex;gap:32px;align-items:center}
-.nav-links a{color:var(--text3);font-size:14px;font-weight:500;letter-spacing:.3px;transition:color .2s}
-.nav-links a:hover{color:var(--text)}
-.nav-links a.nav-cta{color:var(--bg);background:var(--accent);padding:8px 20px;border-radius:99px;font-weight:600;font-size:13px}
-.nav-links a.nav-cta:hover{background:var(--warm);color:var(--bg)}
+/* NAV: a selection cursor lands on each item in Dream, brackets close round it in Nightmare */
+.nav{position:sticky;top:0;z-index:50;background:var(--bg)}
+.nav .wrap{display:flex;align-items:center;gap:24px;height:64px}
+.nav-name{font:700 1.125rem/1 var(--display);color:var(--ink);text-decoration:none;margin-right:auto}
+.nav-links{display:flex;gap:6px}
+.nav-links a{color:var(--ink);text-decoration:none;padding:10px 6px;font-weight:500}
+.nav-links a::before,.nav-links a::after{color:var(--cherry-text);opacity:0;transition:opacity .2s}
+.nav-links a::before{content:'▶';font-size:.7em;margin-right:6px;vertical-align:.12em}
+.nav-links a::after{content:''}
+.nav-links a:hover::before,.nav-links a:hover::after,.nav-links a:focus-visible::before,.nav-links a:focus-visible::after{opacity:1}
+:root[data-world=nightmare] .nav-links a{font:400 .8125rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;padding:14px 6px}
+:root[data-world=nightmare] .nav-links a::before{content:'[';font-size:1em;vertical-align:0;margin-right:6px;opacity:.35;color:var(--cherry)}
+:root[data-world=nightmare] .nav-links a::after{content:']';margin-left:6px;opacity:.35;color:var(--cherry)}
+:root[data-world=nightmare] .nav-links a:hover::before,:root[data-world=nightmare] .nav-links a:hover::after{opacity:1}
+.switch{min-height:44px;padding:10px 18px 10px 12px;font-size:.9375rem}
+.switch .pip{width:18px;height:18px;border-radius:50%;background:var(--btn-ink);transition:border-radius .3s,transform .5s var(--swing)}
+:root[data-world=nightmare] .switch{font-size:.75rem}
+:root[data-world=nightmare] .switch .pip{border-radius:0;transform:rotate(45deg) scale(.8)}
+html:not(.js) .switch{display:none}
 
-/* HERO */
-.hero{min-height:100vh;display:flex;align-items:center;padding:0 6%;position:relative;overflow:hidden;background-image:radial-gradient(rgba(192,132,252,.07) 1px,transparent 1px);background-size:32px 32px;background-position:center}
-.hero-glow{position:absolute;top:-150px;right:-50px;width:800px;height:800px;background:radial-gradient(circle,rgba(192,132,252,.14) 0%,rgba(192,132,252,.04) 40%,transparent 65%);pointer-events:none;animation:float 8s ease-in-out infinite;border-radius:50%}
-.hero-glow-2{position:absolute;bottom:-250px;left:-150px;width:700px;height:700px;background:radial-gradient(circle,rgba(251,191,36,.08) 0%,rgba(251,191,36,.02) 40%,transparent 65%);pointer-events:none;animation:float 10s ease-in-out infinite reverse;border-radius:50%}
-.hero-glow-3{position:absolute;top:30%;right:15%;width:500px;height:500px;background:radial-gradient(circle,rgba(45,212,191,.06) 0%,transparent 60%);pointer-events:none;animation:float 12s ease-in-out infinite 2s;border-radius:50%}
-@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-20px)}}
+/* STAGE LABELS: a title plate in Dream, a readout in Nightmare */
+.stage{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.stage .tag{display:inline-block;background:var(--btn-bg);color:var(--btn-ink);font:800 .8125rem/1 var(--text);letter-spacing:.1em;text-transform:uppercase;padding:10px 16px 9px;border-radius:6px;box-shadow:inset 0 0 0 2px var(--btn-bg),inset 0 0 0 3.5px var(--btn-ink)}
+.stage em{font:600 .9375rem var(--text);font-style:normal;color:var(--muted)}
+:root[data-world=nightmare] .stage .tag{background:none;padding:0;border-radius:0;box-shadow:none;font:600 .8125rem/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--cherry)}
+:root[data-world=nightmare] .stage .tag::before{content:'▸ '}
+:root[data-world=nightmare] .stage em{flex:1;display:flex;align-items:center;gap:12px;font:400 .8125rem var(--mono);letter-spacing:.15em;text-transform:uppercase}
+:root[data-world=nightmare] .stage em::before{content:'';flex:1;height:1px;background:var(--line)}
 
-/* FLOATING SHAPES */
-.hero-shapes{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.shape{position:absolute;opacity:.06;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
-.shape-circle{border-radius:50%;border:1.5px solid var(--accent)}
-.shape-ring{border-radius:50%;border:1.5px solid var(--warm)}
-.shape-tri{width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-bottom:20px solid var(--accent);border:none;background:none}
-.shape-hex{clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);background:var(--accent)}
-.shape-diamond{transform:rotate(45deg);border:1.5px solid var(--teal);border-radius:3px}
-.shape-dot{border-radius:50%;background:var(--accent)}
-.s1{width:40px;height:40px;top:15%;right:20%;animation:drift1 14s infinite}
-.s2{width:24px;height:24px;top:60%;right:12%;animation:drift2 18s infinite;opacity:.04}
-.s3{width:16px;height:16px;top:25%;right:35%;animation:drift3 12s infinite;opacity:.08}
-.s4{width:32px;height:32px;top:70%;right:30%;animation:drift1 16s infinite 3s;opacity:.05}
-.s5{width:20px;height:20px;top:40%;right:8%;animation:drift2 20s infinite 1s;opacity:.06}
-.s6{width:28px;height:28px;top:80%;right:45%;animation:drift3 15s infinite 4s;opacity:.04}
-.s7{width:6px;height:6px;top:20%;right:10%;animation:drift1 10s infinite 2s;opacity:.12}
-.s8{width:8px;height:8px;top:50%;right:25%;animation:drift2 13s infinite 5s;opacity:.1}
-.s9{width:48px;height:48px;top:35%;right:42%;animation:drift3 22s infinite 2s;opacity:.03}
-.s10{width:14px;height:14px;top:75%;right:18%;animation:drift1 17s infinite 6s;opacity:.07}
-.s11{width:10px;height:10px;top:10%;right:50%;animation:drift2 19s infinite 3s;opacity:.05}
-.s12{width:36px;height:36px;top:55%;right:38%;animation:drift1 21s infinite 1s;opacity:.03}
-@keyframes drift1{0%,100%{transform:translate(0,0) rotate(0deg)}25%{transform:translate(-15px,20px) rotate(45deg)}50%{transform:translate(10px,-15px) rotate(90deg)}75%{transform:translate(-20px,-10px) rotate(135deg)}}
-@keyframes drift2{0%,100%{transform:translate(0,0) rotate(0deg)}33%{transform:translate(20px,-25px) rotate(60deg)}66%{transform:translate(-15px,15px) rotate(120deg)}}
-@keyframes drift3{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(-25px,-20px) rotate(180deg)}}
-.hero-content{max-width:800px;position:relative;z-index:1}
-.hero-tag{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;background:var(--surface2);border:1px solid rgba(255,255,255,.06);border-radius:99px;font-size:13px;color:var(--text2);margin-bottom:28px;font-weight:500}
-.hero-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse 2s ease infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.hero-name{font-family:'Instrument Serif',serif;font-size:clamp(52px,8vw,96px);line-height:1;margin-bottom:24px;color:#fff;font-weight:400}
-.hero-name em{font-style:italic;color:var(--accent)}
-.hero-desc{font-size:19px;color:var(--text2);max-width:560px;line-height:1.7;margin-bottom:40px}
-.hero-desc strong{color:var(--text);font-weight:600}
-.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:99px;font-size:15px;font-weight:600;transition:all .25s;cursor:pointer;text-decoration:none;font-family:inherit;border:none}
-.btn-primary{background:var(--accent);color:var(--bg)}
-.btn-primary:hover{background:var(--warm);color:var(--bg);transform:translateY(-1px)}
-.btn-ghost{background:transparent;color:var(--text);border:1.5px solid var(--surface3)}
-.btn-ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+/* FIELDS: coloured bands that hold the pictures; the top edge is a scalloped menu trim in Dream and a diagonal cut in Nightmare */
+.field{position:relative;background:var(--field);color:var(--field-ink)}
+.field a{color:var(--field-link)}
+.field :focus-visible{outline-color:var(--field-ink)}
+.field::before{--s:18px;content:'';position:absolute;left:0;right:0;bottom:calc(100% - 1px);height:var(--s);background:inherit;
+  -webkit-mask:radial-gradient(circle at 50% 100%,#000 calc(var(--s) - .5px),transparent var(--s)) 0 100%/calc(var(--s)*2) var(--s) repeat-x;
+  mask:radial-gradient(circle at 50% 100%,#000 calc(var(--s) - .5px),transparent var(--s)) 0 100%/calc(var(--s)*2) var(--s) repeat-x}
+:root[data-world=nightmare] .field::before{height:var(--edge);-webkit-mask:none;mask:none;clip-path:polygon(0 100%,62% 0,100% 0,100% 100%)}
+
+/* NAME PLATES: in Dream every caption on a field sits on a small plate under its card */
+.field figcaption{width:fit-content;max-width:100%;background:var(--surface);color:var(--ink);border:2px solid var(--ink);border-radius:8px;padding:5px 11px}
+.field figcaption strong,.field figcaption a{color:var(--ink)}
+:root[data-world=nightmare] .field figcaption{background:none;border:0;padding:0;color:var(--muted)}
+:root[data-world=nightmare] .field figcaption a{color:var(--cherry-text)}
+
+/* HERO: the first stage fills the screen */
+.hero{min-height:calc(100svh - 64px);display:flex;flex-direction:column;padding-top:32px}
+.hero h1{font-size:var(--step-display);line-height:1}
+.hero-intro{display:grid;grid-template-columns:7fr 5fr;gap:40px;align-items:end;margin-top:24px}
+.hero-lead{font-size:var(--step-lead);line-height:1.3;max-width:30ch}
+.hero-side{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.hero-note{font-size:var(--step-small);color:var(--muted)}
+.hero .field{flex:1;margin-top:calc(var(--edge) + 24px);padding:24px 0 24px}
+.hero-row{max-width:930px;margin-inline:auto}
+.hero .field figcaption{text-align:center;margin:18px auto 0}
+
+/* PICTURE FRAMES: every picture in a row shares one height; widths follow each picture's own proportions */
+.row{display:flex;gap:var(--gap);align-items:flex-start}
+.row+.row{margin-top:28px}
+.row>figure{flex:var(--r) 1 calc(var(--pad)*2);min-width:0}
+/* Dream: a collectible card, with a double border and a gem pip on its corner, that lifts when picked up */
+.shot{position:relative;display:block;padding:var(--pad);cursor:zoom-in;background:var(--surface);border-radius:14px;box-shadow:0 0 0 var(--ring) var(--frame);transition:transform .45s var(--spring)}
+.shot::after{content:'';position:absolute;inset:4px;border:1.5px solid var(--frame);border-radius:10px;pointer-events:none}
+.shot::before{content:'';position:absolute;z-index:1;top:-8px;left:-8px;width:14px;height:14px;background:var(--cherry);border:2.5px solid var(--frame);transform:rotate(45deg)}
+.shot img{width:100%;height:auto;aspect-ratio:var(--r);object-fit:cover;border-radius:5px}
+.shot.whole img{object-fit:contain}
+.shot:hover{transform:translateY(-6px) rotate(-1deg)}
+.row>figure:nth-child(even) .shot:hover{transform:translateY(-6px) rotate(1deg)}
+:root[data-world=nightmare] .shot::before,:root[data-world=nightmare] .shot::after{content:none}
+:root[data-world=nightmare] .shot{--c:var(--frame);--l:20px;--w:2px;border-radius:0;box-shadow:none;transition:background-size .3s;
+  background:
+    linear-gradient(var(--c),var(--c)) top left/var(--l) var(--w) no-repeat,
+    linear-gradient(var(--c),var(--c)) top left/var(--w) var(--l) no-repeat,
+    linear-gradient(var(--c),var(--c)) top right/var(--l) var(--w) no-repeat,
+    linear-gradient(var(--c),var(--c)) top right/var(--w) var(--l) no-repeat,
+    linear-gradient(var(--c),var(--c)) bottom left/var(--l) var(--w) no-repeat,
+    linear-gradient(var(--c),var(--c)) bottom left/var(--w) var(--l) no-repeat,
+    linear-gradient(var(--c),var(--c)) bottom right/var(--l) var(--w) no-repeat,
+    linear-gradient(var(--c),var(--c)) bottom right/var(--w) var(--l) no-repeat}
+:root[data-world=nightmare] .shot img{border-radius:0}
+:root[data-world=nightmare] .shot:hover,:root[data-world=nightmare] .row>figure:nth-child(even) .shot:hover{transform:none;--l:34px}
+.pair>figure{--r:1.3333}
+figcaption{font-size:var(--step-small);color:var(--muted);margin-top:10px;line-height:1.4}
+figcaption strong{color:var(--ink);font-weight:600}
+:root[data-world=nightmare] figcaption{font-family:var(--mono);font-size:.8125rem;letter-spacing:.02em}
+
+/* The card sheet is printed with Nightmare effects upside down: in Nightmare it turns over so they read upright */
+.cards img{transition:transform .9s var(--swing) .2s}
+:root[data-world=nightmare] .cards img{transform:rotate(180deg)}
 
 /* SECTIONS */
-.section{padding:120px 6%;max-width:1200px;margin:0 auto}
-.section-tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;font-weight:700;margin-bottom:16px;font-family:'JetBrains Mono',monospace}
-.section-tag::before{content:'';width:20px;height:1.5px;background:var(--accent)}
-.section-title{font-family:'Instrument Serif',serif;font-size:clamp(36px,5vw,56px);color:#fff;margin-bottom:20px;line-height:1.1}
-.section-desc{font-size:17px;color:var(--text2);max-width:600px;margin-bottom:56px;line-height:1.7}
+section{padding-top:var(--section)}
+.section-intro{max-width:36ch;font-size:var(--step-lead);line-height:1.35}
+.split-head{display:grid;grid-template-columns:6fr 6fr;gap:48px;align-items:end}
+.split-head h2{margin-bottom:0}
+.split-head .section-intro{padding-bottom:.35em}
+.about-text p,.p-head p,.p-head li,.systems p,.cert p{max-width:62ch}
 
 /* ABOUT */
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
-.about-text{font-size:17px;color:var(--text2);line-height:1.8}
-.about-text strong{color:var(--text);font-weight:600}
-.about-edu{background:var(--surface);border-radius:var(--radius);padding:32px;border:1px solid rgba(255,255,255,.04)}
-.edu-school{font-family:'Instrument Serif',serif;font-size:22px;color:#fff;margin-bottom:4px}
-.edu-degree{font-size:15px;color:var(--text2);margin-bottom:4px}
-.edu-spec{font-size:14px;color:var(--accent);font-weight:500;margin-bottom:12px}
-.edu-honors{display:flex;flex-wrap:wrap;gap:8px}
-.edu-badge{padding:5px 14px;background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.12);border-radius:99px;font-size:12px;color:var(--warm);font-weight:500}
-@media(max-width:900px){.about-grid{grid-template-columns:1fr;gap:32px}}
+.about{display:grid;grid-template-columns:7fr 5fr;gap:48px;align-items:start}
+.about-text{font-size:var(--step-lead);line-height:1.4}
+.facts{display:grid;gap:20px;padding-top:8px}
+.facts dt{font-size:var(--step-small);color:var(--muted)}
+:root[data-world=nightmare] .facts dt{font:400 .8125rem var(--mono);letter-spacing:.12em;text-transform:uppercase}
+.facts dd{font-weight:600}
 
-/* PROJECT CARDS */
-.project{background:var(--surface);border-radius:24px;padding:48px;margin-bottom:56px;border:1px solid rgba(255,255,255,.04);position:relative;overflow:hidden;transition:border-color .3s}
-.project:hover{border-color:rgba(255,255,255,.08)}
-.project::before{content:'';position:absolute;top:0;right:0;width:300px;height:300px;border-radius:50%;filter:blur(80px);opacity:.06;pointer-events:none}
-.project-telerehab::before{background:var(--teal)}
-.project-wonderland::before{background:var(--accent)}
-.project-finalbell::before{background:var(--rose)}
-.project-blender::before{background:var(--warm)}
+/* DIALOGUE PANEL: About is spoken, in an ornate box with a speaker plate in Dream, and a log in Nightmare */
+.dialogue{position:relative;background:var(--surface);border:3px solid var(--ink);border-radius:18px;padding:40px 32px 36px;box-shadow:inset 0 0 0 5px var(--surface),inset 0 0 0 6.5px var(--ink)}
+.speaker{position:absolute;top:-22px;left:24px;background:var(--btn-bg);color:var(--btn-ink);font:700 1.125rem/1 var(--display);padding:11px 20px 10px;border-radius:8px;box-shadow:inset 0 0 0 2px var(--btn-bg),inset 0 0 0 3.5px var(--btn-ink)}
+.dialogue::after{content:'▼';position:absolute;right:22px;bottom:12px;font-size:.875rem;color:var(--cherry-text);animation:nudge 1.1s steps(2,jump-none) infinite alternate}
+@keyframes nudge{to{transform:translateY(4px)}}
+:root[data-world=nightmare] .dialogue{background:none;border:0;border-left:2px solid var(--cherry);border-radius:0;box-shadow:none;padding:4px 0 4px 24px}
+:root[data-world=nightmare] .speaker{position:static;display:block;background:none;box-shadow:none;padding:0;margin-bottom:16px;font:600 .8125rem/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--cherry)}
+:root[data-world=nightmare] .dialogue::after{content:'█';position:static;color:var(--cherry);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
 
-.project-eyebrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
-.project-role{font-size:12px;color:var(--accent);letter-spacing:1.5px;text-transform:uppercase;font-weight:700;font-family:'JetBrains Mono',monospace}
-.project-date{font-size:12px;color:var(--text3);font-family:'JetBrains Mono',monospace}
-.project-title{font-family:'Instrument Serif',serif;font-size:clamp(28px,3.5vw,42px);color:#fff;margin-bottom:4px;line-height:1.15}
-.project-subtitle{font-size:15px;color:var(--text3);margin-bottom:20px}
-.award{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.15);border-radius:99px;font-size:13px;color:var(--warm);font-weight:600;margin-bottom:20px}
-.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
-.tag{padding:4px 14px;background:var(--surface2);border:1px solid rgba(255,255,255,.05);border-radius:99px;font-size:12px;color:var(--text2);font-weight:500}
-.project-desc{font-size:16px;color:var(--text2);line-height:1.8;margin-bottom:32px;max-width:700px}
+/* INVENTORY SLOTS: tools sit in slots in Dream and read as a plain list in Nightmare */
+.slots{list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.slots li{background:var(--surface);color:var(--ink);border:2px solid var(--ink);border-radius:8px;padding:5px 12px;font-weight:600;font-size:var(--step-small);line-height:1.3}
+:root[data-world=nightmare] .slots{display:block}
+:root[data-world=nightmare] .slots li{display:inline;background:none;border:0;padding:0;color:var(--muted);font:400 .8125rem/1.7 var(--mono)}
+:root[data-world=nightmare] .toolkit .slots li{color:var(--ink)}
+:root[data-world=nightmare] .slots li+li::before{content:' · ';color:var(--cherry)}
 
-/* GALLERIES */
-.gallery{display:grid;gap:12px;margin-bottom:20px}
-.g2{grid-template-columns:1fr 1fr}
-.g3{grid-template-columns:1fr 1fr 1fr}
-.g4{grid-template-columns:1fr 1fr 1fr 1fr}
-.g-wide{grid-template-columns:1fr}
-.img-card{position:relative;overflow:hidden;border-radius:var(--radius-sm);background:var(--surface2);border:1px solid rgba(255,255,255,.03);cursor:zoom-in}
-.img-card img{width:100%;display:block;transition:transform .5s cubic-bezier(.16,1,.3,1)}
-.img-card:hover img{transform:scale(1.03)}
-.img-card::after{content:'🔍';position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);padding:4px 10px;border-radius:99px;font-size:11px;opacity:0;transition:opacity .25s;pointer-events:none}
-.img-card:hover::after{opacity:1}
-.img-cap{font-size:11px;color:var(--text3);text-align:center;margin-top:8px;font-family:'JetBrains Mono',monospace;letter-spacing:.3px}
-
-/* LIGHTBOX */
-.lightbox{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.92);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;opacity:0;pointer-events:none;transition:opacity .3s ease;cursor:zoom-out;padding:40px}
-.lightbox.open{opacity:1;pointer-events:all}
-.lightbox img{max-height:88vh;border-radius:12px;box-shadow:0 24px 80px rgba(0,0,0,.6);transform:scale(.92);transition:transform .35s cubic-bezier(.16,1,.3,1);object-fit:contain}
-.lightbox.open img{transform:scale(1)}
-.lightbox-close{position:absolute;top:24px;right:28px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);color:#fff;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;transition:background .2s;font-family:system-ui}
-.lightbox-close:hover{background:rgba(255,255,255,.15)}
-.lightbox-cap{font-size:12px;color:var(--text2);font-family:'JetBrains Mono',monospace;background:rgba(0,0,0,.5);padding:8px 20px;border-radius:99px;max-width:90vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-
-/* CONTRIBUTIONS */
-.contrib-head{font-size:13px;color:var(--accent);letter-spacing:1.5px;text-transform:uppercase;font-weight:700;font-family:'JetBrains Mono',monospace;margin-top:36px;margin-bottom:16px}
-.contrib{list-style:none;padding:0}
-.contrib li{position:relative;padding-left:20px;margin-bottom:10px;font-size:15px;color:var(--text2);line-height:1.7}
-.contrib li::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:700}
-
-/* SYSTEM CALLOUTS */
-.callout{background:var(--surface2);border-radius:var(--radius-sm);padding:28px;margin:24px 0;border-left:3px solid var(--accent);position:relative}
-.callout h4{font-family:'Instrument Serif',serif;font-size:20px;color:#fff;margin-bottom:10px;font-weight:400}
-.callout p{font-size:14px;color:var(--text2);line-height:1.7}
-.stats{display:flex;gap:28px;margin-top:16px;flex-wrap:wrap}
-.stat{text-align:center}
-.stat-val{font-size:28px;font-weight:800;color:var(--accent);font-family:'Bricolage Grotesque',sans-serif}
-.stat-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-top:2px;font-family:'JetBrains Mono',monospace}
-
-/* PROJECT LINKS */
-.plinks{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
-.plink{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border-radius:99px;font-size:13px;font-weight:600;transition:all .25s;text-decoration:none}
-.plink-primary{background:var(--accent-glow);color:var(--accent);border:1px solid rgba(192,132,252,.2)}
-.plink-primary:hover{background:rgba(192,132,252,.2)}
-.plink-ghost{background:transparent;color:var(--text3);border:1px solid var(--surface3)}
-.plink-ghost:hover{border-color:var(--accent);color:var(--accent)}
-
-/* DESIGN PROCESS SECTION */
-.process-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:24px 0}
-
-/* SIDE-BY-SIDE COMPARISON */
-.compare{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--surface3);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:16px}
-.compare-side{position:relative;overflow:hidden;background:var(--surface2);cursor:zoom-in}
-.compare-side img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.16,1,.3,1)}
-.compare-side:hover img{transform:scale(1.03)}
-.compare-side::after{content:'🔍';position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);padding:4px 10px;border-radius:99px;font-size:11px;opacity:0;transition:opacity .25s;pointer-events:none}
-.compare-side:hover::after{opacity:1}
-.compare-label{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);padding:4px 12px;border-radius:99px;font-size:10px;color:var(--text2);font-family:'JetBrains Mono',monospace;letter-spacing:.5px;text-transform:uppercase;pointer-events:none}
-
-/* VIDEO */
-.vid-card{border-radius:var(--radius-sm);overflow:hidden;background:var(--surface2);border:1px solid rgba(255,255,255,.03)}
-.vid-card video{width:100%;display:block;border-radius:var(--radius-sm) var(--radius-sm) 0 0}
-.vid-label{padding:10px 14px;font-size:11px;color:var(--text3);font-family:'JetBrains Mono',monospace;letter-spacing:.5px;text-align:center}
-.vid-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
-
-@media(max-width:900px){.compare{grid-template-columns:1fr}.vid-grid{grid-template-columns:1fr}}
-.process-card{background:var(--surface2);border-radius:var(--radius-sm);overflow:hidden;border:1px solid rgba(255,255,255,.03);cursor:zoom-in;position:relative;transition:border-color .3s}
-.process-card:hover{border-color:rgba(255,255,255,.08)}
-.process-card .pc-img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.16,1,.3,1)}
-.process-card:hover .pc-img{transform:scale(1.03)}
-.process-card::after{content:'🔍';position:absolute;bottom:36px;right:10px;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);padding:4px 10px;border-radius:99px;font-size:11px;opacity:0;transition:opacity .25s;pointer-events:none}
-.process-card:hover::after{opacity:1}
-.process-label{padding:10px 14px;font-size:11px;color:var(--text3);font-family:'JetBrains Mono',monospace;letter-spacing:.5px;text-align:center}
-
-/* SKILLS */
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
-.skill-card{background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid rgba(255,255,255,.04);transition:border-color .3s}
-.skill-card:hover{border-color:rgba(192,132,252,.15)}
-.skill-icon{font-size:24px;margin-bottom:12px}
-.skill-name{font-size:12px;color:var(--accent);letter-spacing:1.5px;text-transform:uppercase;font-weight:700;font-family:'JetBrains Mono',monospace;margin-bottom:10px}
-.skill-items{font-size:14px;color:var(--text2);line-height:1.9}
+/* PROJECTS: each opens on a screen-sized title card */
+.project{margin-top:var(--section)}
+.project:first-of-type{margin-top:48px}
+.stage-card{min-height:min(calc(100svh - 64px),860px);display:flex;flex-direction:column;justify-content:center}
+.stage-card h3{margin-bottom:32px}
+.p-head{display:grid;grid-template-columns:6fr 6fr;gap:48px;align-items:start}
+.meta{font-size:var(--step-small);color:var(--muted)}
+.meta strong{color:var(--ink);font-weight:600}
+:root[data-world=nightmare] .meta,:root[data-world=nightmare] .tools{font-family:var(--mono);font-size:.8125rem;letter-spacing:.03em}
+.award{margin-top:16px;font-weight:600}
+.award::before{content:'★';color:var(--mark);margin-right:.45em}
+:root[data-world=nightmare] .award::before{content:'▸'}
+.desc{margin-top:20px}
+.tools{margin-top:16px;font-size:var(--step-small);color:var(--muted)}
+.did ul{padding-left:1.4em;display:grid;gap:8px;list-style-type:'◆  '}
+.did li::marker{color:var(--mark)}
+:root[data-world=nightmare] .did ul{list-style-type:'▸  '}
+.links{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:24px;font-weight:600}
+.links a:hover{text-decoration-style:wavy;text-decoration-thickness:1.5px}
+:root[data-world=nightmare] .links a{font:600 .875rem var(--mono);letter-spacing:.06em;text-transform:uppercase}
+:root[data-world=nightmare] .links a::before{content:'▸ ';opacity:0;transition:opacity .2s}
+:root[data-world=nightmare] .links a:hover{text-decoration-style:solid}
+:root[data-world=nightmare] .links a:hover::before{opacity:1}
+.p-media{margin-top:calc(var(--edge) + 40px);padding:40px 0 56px}
+.media-head{width:fit-content;background:var(--btn-bg);color:var(--btn-ink);font:700 1.125rem/1 var(--display);padding:11px 18px 10px;border-radius:8px;box-shadow:inset 0 0 0 2px var(--btn-bg),inset 0 0 0 3.5px var(--btn-ink);margin:48px 0 22px}
+.media-head:first-child{margin-top:0}
+:root[data-world=nightmare] .media-head{background:none;padding:0;border-radius:0;box-shadow:none;font:600 var(--step-small)/1.3 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--cherry-text)}
 
 /* CERTIFICATE */
-.cert-section{display:flex;gap:40px;align-items:center;margin-top:48px;padding:40px;background:var(--surface);border-radius:24px;border:1px solid rgba(251,191,36,.1)}
-.cert-img{flex:0 0 340px;border-radius:var(--radius-sm);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4)}
-.cert-img img{width:100%}
-.cert-text h3{font-family:'Instrument Serif',serif;font-size:28px;color:#fff;margin-bottom:12px}
-.cert-text p{font-size:15px;color:var(--text2);line-height:1.7}
+.cert{display:grid;grid-template-columns:5fr 7fr;gap:40px;align-items:center;margin-top:48px}
+.cert p{max-width:52ch}
+
+/* FINAL BELL: systems */
+.systems{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:56px}
+.systems p{font-size:var(--step-small);line-height:1.6}
+.endings{width:100%;border-collapse:collapse;font-size:var(--step-small);margin-top:4px}
+.endings th{text-align:left;font-weight:500;color:var(--muted);padding:0 0 6px}
+.endings td{padding:6px 0;font-variant-numeric:tabular-nums;border-top:1px solid var(--line)}
+.endings td:first-child{font-weight:600}
+:root[data-world=nightmare] .endings{font-family:var(--mono);font-size:.8125rem}
+
+/* VIDEO */
+.video video{width:100%;height:auto;aspect-ratio:16/9;background:#120b10;object-fit:cover;border-radius:12px;box-shadow:0 0 0 2px var(--frame)}
+:root[data-world=nightmare] .video video{border-radius:0;box-shadow:0 0 0 1px var(--line)}
+.videos{display:grid;grid-template-columns:1fr 1fr;gap:28px var(--gap)}
+
+/* TOOLKIT */
+.toolkit{display:grid;grid-template-columns:4fr 8fr;gap:20px 48px;margin-top:40px}
+.toolkit dt{font-weight:700}
+:root[data-world=nightmare] .toolkit dt{font:600 .8125rem/1.6 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--cherry-text)}
 
 /* CONTACT */
-.contact-wrap{text-align:center;max-width:600px;margin:0 auto}
-.contact-wrap p{font-size:17px;color:var(--text2);margin-bottom:36px;line-height:1.7}
-.contact-links{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
-.contact-email{font-family:'JetBrains Mono',monospace;font-size:14px}
+.contact{--field:var(--contact-bg);margin-top:calc(var(--section) + var(--edge));padding:var(--section) 0 32px;color:var(--contact-ink)}
+.contact h2{margin-bottom:16px}
+.contact .section-intro{max-width:40ch}
+.contact a{color:var(--contact-ink)}
+:root[data-world=nightmare] .contact .email{color:var(--cherry-text)}
+.email{display:inline-block;margin-top:48px;font-size:clamp(1.6rem,.6rem + 4vw,3.6rem);font-weight:700;letter-spacing:-.02em;line-height:1.1;text-decoration-thickness:2px}
+.email:hover{text-decoration-style:wavy}
+.contact-more{display:flex;flex-wrap:wrap;gap:12px 32px;margin-top:28px;font-weight:600}
+.footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 24px;margin-top:var(--section);font-size:var(--step-small)}
+.contact :focus-visible{outline-color:var(--contact-ink)}
 
-/* FOOTER */
-.footer{text-align:center;padding:48px 6%;font-size:13px;color:var(--text3);border-top:1px solid rgba(255,255,255,.04)}
-.footer span{color:var(--accent)}
+/* THE FLIP: a cherry sweep crosses the screen and the world changes behind it */
+.veil{position:fixed;top:0;bottom:0;left:-20vw;width:140vw;z-index:200;background:#e0234e;color:#fff;display:flex;align-items:center;justify-content:center;pointer-events:none;transform:translateX(-120%) skewX(-12deg)}
+.veil[hidden]{display:none}
+.veil span{font:900 clamp(2.5rem,1rem + 7vw,7rem)/1 var(--display);transform:skewX(12deg)}
 
-/* RESPONSIVE */
-@media(max-width:900px){
-  .nav-links a:not(.nav-cta){display:none}
-  .hero{padding-top:100px}
-  .section{padding:80px 5%}
-  .project{padding:28px}
-  .g2,.g3,.g4{grid-template-columns:1fr}
-  .process-grid{grid-template-columns:1fr}
-  .cert-section{flex-direction:column}
-  .cert-img{flex:none;width:100%;max-width:400px}
-  .stats{gap:16px}
-  .contact-links{flex-direction:column;align-items:center}
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;z-index:100;background:rgba(18,11,16,.94);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:56px 24px 24px;opacity:0;visibility:hidden;transition:opacity .25s,visibility 0s .25s;cursor:zoom-out}
+.lightbox.open{opacity:1;visibility:visible;transition:opacity .25s}
+.lightbox img{max-height:84vh;width:auto;object-fit:contain;background:#fff}
+.lightbox-cap{color:#f6e9ee;font-size:var(--step-small);text-align:center;max-width:60ch}
+.lightbox-close{position:absolute;top:12px;right:12px;min-height:48px}
+
+/* ENTRANCES: shown without script; with script, parts pop up as their section arrives */
+html.js [data-a]{opacity:0;transform:translateY(28px) scale(.98);transition:opacity .6s ease,transform .8s var(--spring);transition-delay:var(--d,0ms)}
+html.js [data-a].vis{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  html.js [data-a]{transform:none;transition:opacity .3s ease}
+  .shot,.btn,.cards img,.switch .pip{transition:none}
+  .dialogue::after{animation:none}
+  .shot:hover,.row>figure:nth-child(even) .shot:hover,.btn:hover{transform:none}
 }
 
-/* SCROLL ANIMATION */
-[data-a]{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
-[data-a].vis{opacity:1;transform:none}
+/* PHONE AND TABLET */
+@media(max-width:820px){
+  .nav-links{display:none}
+  .hero-intro,.about,.p-head,.cert,.toolkit,.split-head{grid-template-columns:1fr;gap:24px}
+  .systems{grid-template-columns:1fr;gap:32px}
+  .stage-card{min-height:0}
+  .p-media{margin-top:calc(var(--edge) + 32px);padding:28px 0 40px}
+  .toolkit dd{margin-bottom:12px}
+  .dialogue{padding:36px 20px 32px}
+}
+@media(max-width:600px){
+  .switch .long{display:none}
+  .hero{min-height:0}
+  .hero-row figure:nth-child(3){display:none}
+  .row{flex-direction:column;gap:20px}
+  .row>figure{width:100%;flex:none}
+  .row.screens{display:grid;grid-template-columns:1fr 1fr;gap:20px var(--gap)}
+  .hero-row.row{flex-direction:row;gap:var(--gap)}
+  .hero-row.row>figure{flex:var(--r) 1 calc(var(--pad)*2);width:auto}
+  .videos{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="nav" id="nav">
-  <a href="#" class="nav-logo">ibeth<span>.</span></a>
-  <div class="nav-links">
-    <a href="#about">About</a>
-    <a href="#work">Work</a>
-    <a href="#skills">Skills</a>
-    <a href="#contact" class="nav-cta">Say Hello</a>
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a href="#top" class="nav-name">Ibeth Fernandez</a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#toolkit">Toolkit</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="btn switch" id="switch" type="button"><span class="pip" aria-hidden="true"></span><span class="v-d"><span class="long">Enter the </span>Nightmare</span><span class="v-n">Wake up</span></button>
   </div>
 </nav>
+<p class="sr" id="world-live" aria-live="polite"></p>
+
+<main id="top">
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-glow"></div>
-  <div class="hero-glow-2"></div>
-  <div class="hero-glow-3"></div>
-  <div class="hero-shapes">
-    <div class="shape shape-circle s1"></div>
-    <div class="shape shape-ring s2"></div>
-    <div class="shape shape-hex s3"></div>
-    <div class="shape shape-diamond s4"></div>
-    <div class="shape shape-circle s5"></div>
-    <div class="shape shape-ring s6"></div>
-    <div class="shape shape-dot s7"></div>
-    <div class="shape shape-dot s8"></div>
-    <div class="shape shape-circle s9"></div>
-    <div class="shape shape-hex s10"></div>
-    <div class="shape shape-diamond s11"></div>
-    <div class="shape shape-ring s12"></div>
-  </div>
-  <div class="hero-content" data-a>
-    <div class="hero-tag"><span class="dot"></span> Open to opportunities</div>
-    <h1 class="hero-name">Ibeth<br><em>Fernandez</em></h1>
-    <p class="hero-desc"><strong>UX &amp; Game Designer</strong> with a B.S. in Human-Computer Interaction from NJIT. I design things that feel good to use — from <strong>90-screen health apps</strong> to <strong>card games with hidden identities</strong>.</p>
-    <div class="hero-btns">
-      <a href="#work" class="btn btn-primary">See my work ↓</a>
-      <a href="#contact" class="btn btn-ghost">Get in touch</a>
+<header class="hero">
+  <div class="wrap">
+    <p class="stage"><span class="tag"><span class="v-d">Player one</span><span class="v-n">Player 01</span></span><em><span class="v-d">UX + game design</span><span class="v-n">UX / Game design</span></em></p>
+    <h1>Ibeth Fernandez</h1>
+    <div class="hero-intro">
+      <p class="hero-lead">UX and game designer. Most recently, all 90+ screens and the design system for TeleRehab, a rehab app for construction workers.</p>
+      <div class="hero-side">
+        <p class="hero-note">B.S. Human-Computer Interaction, NJIT 2026. Open to UX and game design roles.</p>
+        <a href="#work" class="btn">See the work</a>
+      </div>
     </div>
   </div>
-</section>
+  <div class="field">
+    <div class="wrap">
+      <figure>
+        <div class="row hero-row">
+          <figure style="--r:.7241"><a class="shot" href="images/telerehabdashboard.png"><img src="images/telerehabdashboard.png" width="588" height="812" alt="TeleRehab dashboard: today's goals, routine and exercises"></a></figure>
+          <figure style="--r:.7241"><a class="shot" href="images/telerehabpaincheck.png"><img src="images/telerehabpaincheck.png" width="588" height="812" alt="TeleRehab pain check with the interactive foot map"></a></figure>
+          <figure style="--r:.7241"><a class="shot" href="images/telerehabprogress.png"><img src="images/telerehabprogress.png" width="588" height="812" alt="TeleRehab progress tracking"></a></figure>
+        </div>
+        <figcaption>TeleRehab dashboard, pain check and progress screens. <a href="#telerehab">Read the case study</a></figcaption>
+      </figure>
+    </div>
+  </div>
+</header>
 
 <!-- ABOUT -->
-<section class="section" id="about">
-  <div class="section-tag">About me</div>
-  <h2 class="section-title">The short version</h2>
-  <div class="about-grid" data-a>
-    <div class="about-text">
-      I just graduated from NJIT with a degree in <strong>Human-Computer Interaction</strong> and a specialization in <strong>Game Design</strong>. Most of my work bounces between two things — designing interfaces that need to actually work for real people, and building game systems where the rules and the story tie together.<br><br>
-      I'm open to different kinds of work — UX, game design, whatever lets me build things people actually interact with. I just like making stuff that works and feels intentional.
-    </div>
-    <div class="about-edu">
-      <div class="edu-school">New Jersey Institute of Technology</div>
-      <div class="edu-degree">B.S. Human-Computer Interaction</div>
-      <div class="edu-spec">Game Design &amp; Production Specialization · May 2026</div>
-      <div class="edu-honors">
-        <span class="edu-badge">🏆 3rd Place — Capstone Showcase</span>
-        <span class="edu-badge">📋 Dean's List ×2</span>
+<section id="about">
+  <div class="wrap">
+    <h2 data-a>About</h2>
+    <div class="about">
+      <div class="about-text dialogue" data-a style="--d:80ms">
+        <span class="speaker" aria-hidden="true"><span class="v-d">Ibeth</span><span class="v-n">Log / ibeth.txt</span></span>
+        <p>I just graduated from NJIT with a degree in Human-Computer Interaction and a specialization in Game Design. Most of my work bounces between two things: designing interfaces that need to actually work for real people, and building game systems where the rules and the story tie together.</p>
+        <p>I'm open to different kinds of work, UX, game design, whatever lets me build things people actually interact with. I like making stuff that works and feels intentional.</p>
       </div>
+      <dl class="facts" data-a style="--d:160ms">
+        <div><dt>School</dt><dd>New Jersey Institute of Technology</dd></div>
+        <div><dt>Degree</dt><dd>B.S. Human-Computer Interaction, May 2026</dd></div>
+        <div><dt>Specialization</dt><dd>Game Design &amp; Production</dd></div>
+        <div><dt>Honors</dt><dd>3rd place, YWCC Capstone Showcase<br>Dean's List, twice</dd></div>
+      </dl>
     </div>
   </div>
 </section>
 
 <!-- WORK -->
-<section class="section" id="work">
-  <div class="section-tag">Selected projects</div>
-  <h2 class="section-title">Things I've made</h2>
-  <p class="section-desc">From tele-rehabilitation platforms to psychological horror games — here's a look at what I've been working on.</p>
+<section id="work">
+  <div class="wrap split-head">
+    <h2 data-a>Selected work</h2>
+    <p class="section-intro" data-a style="--d:80ms">From a tele-rehabilitation platform to a psychological horror game, here's what I've been working on.</p>
+  </div>
 
-  <!-- ═══════════════ TELEREHAB ═══════════════ -->
-  <article class="project project-telerehab" data-a>
-    <div class="project-eyebrow">
-      <span class="project-role">UX Designer</span>
-      <span class="project-date">Spring 2026</span>
-    </div>
-    <h3 class="project-title">TeleRehab</h3>
-    <p class="project-subtitle">Senior Capstone · NJIT · Sponsored by Dr. Roni Barak Ventura, PID Lab</p>
-    <div class="award">🏆 3rd Place — YWCC Capstone Showcase</div>
-    <div class="tags">
-      <span class="tag">Figma</span><span class="tag">UX Design</span><span class="tag">Prototyping</span><span class="tag">Design System</span><span class="tag">User Flows</span><span class="tag">Accessibility</span><span class="tag">Scrum</span>
-    </div>
-    <p class="project-desc">A tele-rehabilitation tablet app designed for construction workers managing plantar fasciitis. Workers stand on concrete 8+ hours a day — TeleRehab brings guided exercises, pain tracking, and wearable sensor support directly to the job site.</p>
-
-    <!-- Hero Screens -->
-    <div class="gallery g3">
-      <div class="img-card"><img src="images/telerehabsplash.png" alt="TeleRehab splash screen" loading="lazy"></div>
-      <div class="img-card"><img src="images/telerehabdashboard.png" alt="TeleRehab dashboard" loading="lazy"></div>
-      <div class="img-card"><img src="images/telerehabpaincheck.png" alt="TeleRehab pain map" loading="lazy"></div>
-    </div>
-    <div class="gallery g4">
-      <div class="img-card"><img src="images/telerehabroutine.png" alt="Routine screen" loading="lazy"></div>
-      <div class="img-card"><img src="images/telerehabsession.png" alt="Session summary" loading="lazy"></div>
-      <div class="img-card"><img src="images/telerehabprogress.png" alt="Progress tracking" loading="lazy"></div>
-      <div class="img-card"><img src="images/telerehabprofile.png" alt="Profile and badges" loading="lazy"></div>
-    </div>
-    <div class="img-cap">Splash · Dashboard · Pain Foot Map · Routine · Session · Progress · Profile</div>
-
-    <!-- Design Process -->
-    <div class="contrib-head">Design Process</div>
-    <div class="process-grid">
-      <div class="process-card" data-lb="Low-Fidelity Wireframes" data-src="images/telerehablowfi.png">
-        <img class="pc-img" src="images/telerehablowfi.png" alt="Low-fidelity wireframes" loading="lazy">
-        <div class="process-label">Low-Fidelity Wireframes</div>
-      </div>
-      <div class="process-card" data-lb="High-Fidelity V2 — 90+ Screens" data-src="images/telerehabhifi.png">
-        <img class="pc-img" src="images/telerehabhifi.png" alt="High-fidelity prototype" loading="lazy">
-        <div class="process-label">High-Fidelity V2 — 90+ Screens</div>
-      </div>
-      <div class="process-card" data-lb="Design System" data-src="images/telerehabdesignsystem.png">
-        <img class="pc-img" src="images/telerehabdesignsystem.png" alt="Design system" loading="lazy">
-        <div class="process-label">Design System</div>
+  <!-- TELEREHAB -->
+  <article class="project" id="telerehab">
+    <div class="wrap stage-card">
+      <p class="stage" data-a><span class="tag"><span class="v-d">Stage 1</span><span class="v-n">Stage 01</span></span><em><span class="v-d">of 4 · Rehab app</span><span class="v-n">/ 04</span></em></p>
+      <h3 data-a>TeleRehab</h3>
+      <div class="p-head">
+        <div data-a>
+          <p class="meta"><strong>UX designer</strong>, Spring 2026. Senior capstone, NJIT, sponsored by Dr. Roni Barak Ventura, PID Lab.</p>
+          <p class="award">3rd place, YWCC Capstone Showcase</p>
+          <p class="desc">A tele-rehabilitation tablet app designed for construction workers managing plantar fasciitis. Workers stand on concrete 8+ hours a day; TeleRehab brings guided exercises, pain tracking and wearable sensor support directly to the job site.</p>
+          <ul class="slots tools"><li>Figma</li><li>UX design</li><li>prototyping</li><li>design system</li><li>user flows</li><li>accessibility</li><li>Scrum</li></ul>
+        </div>
+        <div class="did" data-a style="--d:100ms">
+          <h4>What I did</h4>
+          <ul>
+            <li>Designed all 90+ interactive screens in Figma for iPad Pro (11″) across the entire application</li>
+            <li>Designed the full design system: color palette, typography, component standards, spacing, and accessibility guidelines</li>
+            <li>Designed for glove-friendly use with 48px touch targets throughout, including the interactive pain foot maps, sensor pairing sequences, and recovery-focused rewards</li>
+            <li>Iterated on the designs with weekly sponsor feedback from Dr. Roni Barak Ventura (PID Lab) across the semester, as the sole designer on a 3-person Scrum team using GitHub Projects</li>
+            <li>Led the Onboarding, Arduino Sensor Connection, and Gamification/Progress flows</li>
+            <li>Developed user flows, low-fi wireframes, high-fi prototypes, and a 20+ page design documentation manual</li>
+          </ul>
+        </div>
       </div>
     </div>
 
-    <div class="contrib-head">What I Did</div>
-    <ul class="contrib">
-      <li>Designed 90+ interactive screens in Figma for iPad Pro (11″) across the entire application</li>
-      <li>Owned the Onboarding, Arduino Sensor Connection, and Gamification/Progress flows</li>
-      <li>Created interactive pain foot maps, sensor pairing sequences, and recovery-focused rewards with 48px touch targets for glove-friendly use</li>
-      <li>Built a full design system: color palette, typography, component standards, spacing, and accessibility guidelines</li>
-      <li>Developed user flows, low-fi wireframes, high-fi prototypes, and a 20+ page design documentation manual</li>
-      <li>Collaborated in a 3-person Scrum team using GitHub Projects with iterative sponsor feedback</li>
-    </ul>
-  </article>
+    <div class="p-media field">
+      <div class="wrap">
+        <p class="media-head">More screens</p>
+        <div class="row screens" data-a>
+          <figure style="--r:.7241"><a class="shot" href="images/telerehabsplash.png"><img src="images/telerehabsplash.png" width="588" height="812" alt="TeleRehab splash screen" loading="lazy"></a><figcaption>Splash</figcaption></figure>
+          <figure style="--r:.7241"><a class="shot" href="images/telerehabroutine.png"><img src="images/telerehabroutine.png" width="588" height="812" alt="TeleRehab routine screen" loading="lazy"></a><figcaption>Routine</figcaption></figure>
+          <figure style="--r:.7586"><a class="shot" href="images/telerehabsession.png"><img src="images/telerehabsession.png" width="616" height="812" alt="TeleRehab session summary" loading="lazy"></a><figcaption>Session summary</figcaption></figure>
+          <figure style="--r:.7586"><a class="shot" href="images/telerehabprofile.png"><img src="images/telerehabprofile.png" width="616" height="812" alt="TeleRehab profile and badges" loading="lazy"></a><figcaption>Profile and badges</figcaption></figure>
+        </div>
 
-  <!-- ═══════════════ FRACTURED WONDERLAND ═══════════════ -->
-  <article class="project project-wonderland" data-a>
-    <div class="project-eyebrow">
-      <span class="project-role">Game Designer &amp; Developer</span>
-      <span class="project-date">Spring 2026</span>
-    </div>
-    <h3 class="project-title">Fractured Wonderland</h3>
-    <p class="project-subtitle">IT 265: Game Architecture &amp; Design · NJIT</p>
-    <div class="tags">
-      <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Game Design</span><span class="tag">GDD</span><span class="tag">Playtesting</span><span class="tag">Accessibility</span>
-    </div>
-    <p class="project-desc">A card-based social deduction game set in a dying dream realm inspired by Vocaloid's "Alice of Human Sacrifice." Players are masked dreamers trying to escape — but some are secretly Nightmares keeping everyone trapped. The world constantly shifts between Dream and Nightmare states, flipping how every card works.</p>
+        <p class="media-head">Design process</p>
+        <div class="row" data-a>
+          <figure style="--r:1.1351"><a class="shot whole" href="images/telerehablowfi.png"><img src="images/telerehablowfi.png" width="1176" height="1036" alt="TeleRehab low-fidelity wireframes" loading="lazy"></a><figcaption>Low-fidelity wireframes</figcaption></figure>
+          <figure style="--r:1"><a class="shot whole" href="images/telerehabhifi.png"><img src="images/telerehabhifi.png" width="756" height="756" alt="TeleRehab high-fidelity prototype, 90+ screens" loading="lazy"></a><figcaption>High-fidelity V2, 90+ screens</figcaption></figure>
+          <figure style="--r:.6"><a class="shot whole" href="images/telerehabdesignsystem.png"><img src="images/telerehabdesignsystem.png" width="336" height="1568" alt="TeleRehab design system sheet" loading="lazy"></a><figcaption>Design system (opens full size)</figcaption></figure>
+        </div>
 
-    <!-- Board & Setup -->
-    <div class="gallery g2">
-      <div>
-        <div class="img-card"><img src="images/proto-game.png" alt="Game board prototype" loading="lazy"></div>
-        <div class="img-cap">Game Board — Locations, Fragments, Win Conditions</div>
+        <div class="cert" data-a>
+          <a class="shot" href="images/Ibeth_Fernandez.png" style="--r:1.3235"><img src="images/Ibeth_Fernandez.png" width="1260" height="952" alt="YWCC Capstone Showcase certificate, 3rd place" loading="lazy"></a>
+          <div>
+            <h4>3rd place, YWCC Capstone Showcase</h4>
+            <p>Awarded for outstanding achievement and creative innovation at the Spring 2026 Capstone Showcase at New Jersey Institute of Technology. Presented TeleRehab, a tele-rehabilitation platform for construction workers, signed by Dr. Osama Eljabiri, Capstone Director.</p>
+          </div>
+        </div>
       </div>
-      <div>
-        <div class="img-card"><img src="images/ingame-board.png" alt="Unity in-game board" loading="lazy"></div>
-        <div class="img-cap">Unity Build — In-Game Turn Flow</div>
-      </div>
-    </div>
-
-    <!-- Cards -->
-    <div class="gallery g-wide" style="margin-top:16px">
-      <div class="img-card"><img src="images/wonderland-playingcards.png" alt="Dual-state playing cards" loading="lazy"></div>
-      <div class="img-cap">Dual-State Playing Cards — Dream effects (top) flip to Nightmare effects (bottom)</div>
-    </div>
-    <div class="gallery g-wide" style="margin-top:16px">
-      <div class="img-card"><img src="images/wonderland-wildcards.png" alt="Trickster wild cards" loading="lazy"></div>
-      <div class="img-cap">Trickster Wild Cards — Identity Swap, World Shatter, Blind Round &amp; more</div>
-    </div>
-
-    <div class="contrib-head">What I Did</div>
-    <ul class="contrib">
-      <li>Designed original game concept with dual-state world (Dream/Nightmare) that dynamically changes all card effects and board rules</li>
-      <li>Created 4 unique Alice archetypes (Warrior, Singer, Queen, Twins) with distinct abilities and risk/reward mechanics</li>
-      <li>Developed mechanics including secret identities, world state flips, dual-effect cards, and a corruption system with multiple win conditions</li>
-      <li>Designed card layouts with visual hierarchy for both states, plus 6 Trickster wild cards for high-stakes disruption</li>
-      <li>Authored a complete Game Design Document with mockups, target audience analysis, and accessibility strategies</li>
-      <li>Built a playable prototype in Unity with turn flow, location movement, and card mechanics</li>
-      <li>Conducted external playtesting and iterated on mechanics clarity and card readability</li>
-    </ul>
-    <div class="plinks">
-      <a href="https://ilf39.itch.io/fractured-wonderland" target="_blank" class="plink plink-primary">🎮 Play on itch.io</a>
-      <a href="https://if0390.github.io/ilf-it265-002/wonderland_gdd" target="_blank" class="plink plink-ghost">📄 View Game Design Document</a>
     </div>
   </article>
 
-  <!-- ═══════════════ THE FINAL BELL ═══════════════ -->
-  <article class="project project-finalbell" data-a>
-    <div class="project-eyebrow">
-      <span class="project-role">Dialogue &amp; UI Designer, Developer</span>
-      <span class="project-date">Fall 2025</span>
-    </div>
-    <h3 class="project-title">The Final Bell</h3>
-    <p class="project-subtitle">IT 286: Foundations of Game Production · NJIT · Team: GEI Memories</p>
-    <div class="tags">
-      <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">UI Design</span><span class="tag">Dialogue Systems</span><span class="tag">Narrative Design</span><span class="tag">Playtesting</span><span class="tag">GitHub</span>
-    </div>
-    <p class="project-desc">A 2D psychological horror exploration game set in a decayed school. The player, Ray, wakes up without memories and explores classrooms, the library, cafeteria, and gym to uncover fragments of the past. Each memory shifts the protagonist's mental state — and the more disturbing ones you find, the faster Ray's mind decays.</p>
-
-    <!-- Sprites & Art -->
-    <div class="gallery g2">
-      <div class="img-card"><img src="images/finalbell4.png" alt="Character sprites" loading="lazy"></div>
-      <div class="img-card"><img src="images/finalbell5.png" alt="Background art" loading="lazy"></div>
-    </div>
-    <div class="img-cap">Character Sprites &amp; Background Art — Classroom, Library, Cafeteria, Gym, Principal's Office</div>
-
-    <!-- System Callouts -->
-    <div class="callout">
-      <h4>Memory Tracking &amp; Decay System</h4>
-      <p>I designed a dynamic system where collectible memory fragments shift the protagonist's mental state. Good memories decrease decay (–5), bad memories increase it (+5). The cumulative total determines which of three endings the player experiences.</p>
-      <div class="stats">
-        <div class="stat"><div class="stat-val">3</div><div class="stat-label">Endings</div></div>
-        <div class="stat"><div class="stat-val">5</div><div class="stat-label">Rooms</div></div>
-        <div class="stat"><div class="stat-val">6</div><div class="stat-label">NPCs</div></div>
-        <div class="stat"><div class="stat-val">10</div><div class="stat-label">Memories</div></div>
+  <!-- FRACTURED WONDERLAND -->
+  <article class="project" id="wonderland">
+    <div class="wrap stage-card">
+      <p class="stage" data-a><span class="tag"><span class="v-d">Stage 2</span><span class="v-n">Stage 02</span></span><em><span class="v-d">of 4 · Card game</span><span class="v-n">/ 04</span></em></p>
+      <h3 data-a>Fractured Wonderland</h3>
+      <div class="p-head">
+        <div data-a>
+          <p class="meta"><strong>Game designer and developer</strong>, Spring 2026. IT 265: Game Architecture &amp; Design, NJIT.</p>
+          <p class="desc">A card-based social deduction game set in a dying dream realm inspired by Vocaloid's "Alice of Human Sacrifice." Players are masked dreamers trying to escape, but some are secretly Nightmares keeping everyone trapped. The world constantly shifts between Dream and Nightmare states, flipping how every card works.</p>
+          <ul class="slots tools"><li>Unity</li><li>C#</li><li>game design</li><li>GDD</li><li>playtesting</li><li>accessibility</li></ul>
+          <div class="links">
+            <a href="https://ilf39.itch.io/fractured-wonderland" target="_blank" rel="noopener">Play on itch.io</a>
+            <a href="https://if0390.github.io/ilf-it265-002/wonderland_gdd" target="_blank" rel="noopener">Read the game design document</a>
+          </div>
+        </div>
+        <div class="did" data-a style="--d:100ms">
+          <h4>What I did</h4>
+          <ul>
+            <li>Designed original game concept with dual-state world (Dream/Nightmare) that dynamically changes all card effects and board rules</li>
+            <li>Created 4 unique Alice archetypes (Warrior, Singer, Queen, Twins) with distinct abilities and risk/reward mechanics</li>
+            <li>Developed mechanics including secret identities, world state flips, dual-effect cards, and a corruption system with multiple win conditions</li>
+            <li>Designed card layouts with visual hierarchy for both states, plus 6 Trickster wild cards for high-stakes disruption</li>
+            <li>Authored a complete Game Design Document with mockups, target audience analysis, and accessibility strategies</li>
+            <li>Built a playable prototype in Unity with turn flow, location movement, and card mechanics</li>
+            <li>Conducted external playtesting and iterated on mechanics clarity and card readability</li>
+          </ul>
+        </div>
       </div>
     </div>
 
-    <div class="callout" style="border-left-color:var(--rose)">
-      <h4>NPC Dialogue &amp; Narrative Branching</h4>
-      <p>I wrote the full dialogue script for 6 characters — Mrs. Nick (Gym Teacher), Ms. Vale (Librarian), Mr. Gray (Principal), Lunch Lady Marnie, The Whispering Student, and The Janitor's Shadow. Each NPC delivers cryptic hints guiding players to good and bad memory fragment locations. The MC's tone, internal monologue, and environmental audio all shift dynamically with the Decay Meter.</p>
-    </div>
-
-    <div class="callout" style="border-left-color:var(--warm)">
-      <h4>Three Endings</h4>
-      <div class="stats">
-        <div class="stat"><div class="stat-val" style="color:var(--teal)">≤ 20</div><div class="stat-label">Good — Acceptance</div></div>
-        <div class="stat"><div class="stat-val" style="color:var(--warm)">21–40</div><div class="stat-label">Neutral — Reflection</div></div>
-        <div class="stat"><div class="stat-val" style="color:var(--rose)">≥ 41</div><div class="stat-label">Decay — Trapped</div></div>
+    <div class="p-media field">
+      <div class="wrap">
+        <div class="row" data-a>
+          <figure style="--r:1.0141"><a class="shot" href="images/proto-game.png"><img src="images/proto-game.png" width="1025" height="1011" alt="Fractured Wonderland game board prototype" loading="lazy"></a><figcaption><strong>Game board.</strong> Locations, fragments, win conditions.</figcaption></figure>
+          <figure style="--r:1.8598"><a class="shot" href="images/ingame-board.png"><img src="images/ingame-board.png" width="1910" height="1027" alt="Fractured Wonderland Unity build, in-game board" loading="lazy"></a><figcaption><strong>Unity build.</strong> In-game turn flow.</figcaption></figure>
+        </div>
+        <div class="row" data-a>
+          <figure style="--r:1.8802"><a class="shot cards" href="images/wonderland-playingcards.png"><img src="images/wonderland-playingcards.png" width="1867" height="993" alt="Dual-state playing cards" loading="lazy"></a><figcaption><strong>Dual-state playing cards.</strong> <span class="v-d">Dream effects on top flip to Nightmare effects below.</span><span class="v-n">Turned over: the Nightmare effects now read upright.</span></figcaption></figure>
+          <figure style="--r:1.1271"><a class="shot" href="images/wonderland-wildcards.png"><img src="images/wonderland-wildcards.png" width="1135" height="1007" alt="Trickster wild cards" loading="lazy"></a><figcaption><strong>Trickster wild cards.</strong> Identity Swap, World Shatter, Blind Round and more.</figcaption></figure>
+        </div>
       </div>
-    </div>
-
-    <div class="contrib-head">What I Did</div>
-    <ul class="contrib">
-      <li>Built the dialogue system, UI (menus, decay meter, ending screens), memory tracking system, and a dodging minigame in Unity/C#</li>
-      <li>Wrote the complete game script and NPC dialogue for 6 characters, each with personality-driven hint systems</li>
-      <li>Designed the Decay Meter mechanic (good = –5, bad = +5) with three ending thresholds</li>
-      <li>Created dialogue branching logic where accumulated decay shifts the MC's tone from hopeful to paranoid</li>
-      <li>Authored the Layout Document detailing memory logic, decay tables, branching variables, and visual flowcharts</li>
-      <li>Conducted playtesting with 7 external testers; iterated on UI prompts, movement speed, and interaction clarity</li>
-      <li>Managed version control via GitHub with feature branching; used Trello across a 4-sprint cycle</li>
-    </ul>
-    <div class="plinks">
-      <a href="https://github.com/en228-byte/GEIMemories-TheFinalBell" target="_blank" class="plink plink-primary">💻 View on GitHub</a>
     </div>
   </article>
-  <article class="project project-blender" data-a>
-    <div class="project-eyebrow">
-      <span class="project-role">Blender Artist</span>
-      <span class="project-date">Spring 2026</span>
-    </div>
-    <h3 class="project-title">3D Modeling &amp; Animation</h3>
-    <p class="project-subtitle">IT 270: 3D Modeling &amp; Animation · NJIT</p>
-    <div class="tags">
-      <span class="tag">Blender</span><span class="tag">3D Modeling</span><span class="tag">Rigging</span><span class="tag">Skinning</span><span class="tag">Animation</span><span class="tag">Lighting</span>
-    </div>
-    <p class="project-desc">A portfolio of 3D work covering the full modeling-to-animation pipeline — props, environments, character rigs, walk cycles, and scene recreation from anime reference material.</p>
 
-    <!-- Portfolio Reel -->
-    <div class="vid-card" style="margin-bottom:24px">
-      <video controls preload="metadata" poster="images/scene_model.png">
-        <source src="images/portfolio_reel_compressed.mp4" type="video/mp4">
-      </video>
-      <div class="vid-label">Portfolio Reel — Full Semester Overview</div>
-    </div>
-
-    <!-- Side-by-side comparisons -->
-    <div class="contrib-head">Reference → Model</div>
-
-    <!-- Black Butler Scene -->
-    <div class="compare">
-      <div class="compare-side" data-src="images/scene_reference.png" data-lb="Black Butler — Reference">
-        <img src="images/scene_reference.png" alt="Black Butler reference scene" loading="lazy">
-        <div class="compare-label">Reference</div>
-      </div>
-      <div class="compare-side" data-src="images/scene_model.png" data-lb="Black Butler — 3D Recreation">
-        <img src="images/scene_model.png" alt="Black Butler 3D recreation" loading="lazy">
-        <div class="compare-label">My Model</div>
-      </div>
-    </div>
-    <div class="img-cap">Midterm — Black Butler scene recreation with chess pieces, lighting &amp; star geometry</div>
-
-    <!-- Weapon (Colored) -->
-    <div class="compare">
-      <div class="compare-side" data-src="images/colorweapon_reference.jpg" data-lb="Scissors Weapon — Anime Reference">
-        <img src="images/colorweapon_reference.jpg" alt="Anime scissors weapon reference" loading="lazy">
-        <div class="compare-label">Reference</div>
-      </div>
-      <div class="compare-side" data-src="images/colorweapon_model.png" data-lb="Scissors Weapon — Textured 3D Model">
-        <img src="images/colorweapon_model.png" alt="Textured scissors weapon 3D model" loading="lazy">
-        <div class="compare-label">My Model</div>
-      </div>
-    </div>
-    <div class="img-cap">Weapon Prop — Modeled &amp; textured from anime reference</div>
-
-    <!-- Relaxing Space / Desktop -->
-    <div class="compare">
-      <div class="compare-side" data-src="images/relaxing_space_reference.jpg" data-lb="Desktop Setup — Real Photo">
-        <img src="images/relaxing_space_reference.jpg" alt="Real desktop setup photo" loading="lazy">
-        <div class="compare-label">Reference</div>
-      </div>
-      <div class="compare-side" data-src="images/relaxing_space_model.png" data-lb="Desktop Setup — 3D Recreation">
-        <img src="images/relaxing_space_model.png" alt="Desktop setup 3D recreation" loading="lazy">
-        <div class="compare-label">My Model</div>
-      </div>
-    </div>
-    <div class="img-cap">Relaxing Space — Recreated my actual desk setup in 3D, down to the PC and chair</div>
-
-    <!-- Doorknob -->
-    <div class="compare">
-      <div class="compare-side" data-src="images/doorknob_reference.jpg" data-lb="Doorknob — Real Photo">
-        <img src="images/doorknob_reference.jpg" alt="Real doorknob photo" loading="lazy">
-        <div class="compare-label">Reference</div>
-      </div>
-      <div class="compare-side" data-src="images/doorknob_model.png" data-lb="Doorknob — 3D Model">
-        <img src="images/doorknob_model.png" alt="Doorknob 3D model" loading="lazy">
-        <div class="compare-label">My Model</div>
-      </div>
-    </div>
-    <div class="img-cap">Prop Modeling — Doorknob from reference photo</div>
-
-    <!-- Animation Videos -->
-    <div class="contrib-head">Animations</div>
-    <div class="vid-grid">
-      <div class="vid-card">
-        <video controls preload="metadata" loop>
-          <source src="images/lucky_star_compressed.mp4" type="video/mp4">
-        </video>
-        <div class="vid-label">Final — Lucky Star Cheerleading (50s)</div>
-      </div>
-      <div class="vid-card">
-        <video controls preload="metadata" loop>
-          <source src="images/rube_goldberg_compressed.mp4" type="video/mp4">
-        </video>
-        <div class="vid-label">Rube Goldberg Device</div>
-      </div>
-      <div class="vid-card">
-        <video controls preload="metadata" loop>
-          <source src="images/desktop_object.mp4" type="video/mp4">
-        </video>
-        <div class="vid-label">Animated Desktop Object</div>
-      </div>
-      <div class="vid-card">
-        <video controls preload="metadata" loop>
-          <source src="images/walk_cycle.mp4" type="video/mp4">
-        </video>
-        <div class="vid-label">Walk Cycle</div>
+  <!-- THE FINAL BELL -->
+  <article class="project" id="finalbell">
+    <div class="wrap stage-card">
+      <p class="stage" data-a><span class="tag"><span class="v-d">Stage 3</span><span class="v-n">Stage 03</span></span><em><span class="v-d">of 4 · Horror game</span><span class="v-n">/ 04</span></em></p>
+      <h3 data-a>The Final Bell</h3>
+      <div class="p-head">
+        <div data-a>
+          <p class="meta"><strong>Dialogue and UI designer, developer</strong>, Fall 2025. IT 286: Foundations of Game Production, NJIT. Team GEI Memories.</p>
+          <p class="desc">A 2D psychological horror exploration game set in a decayed school. The player, Ray, wakes up without memories and explores classrooms, the library, cafeteria and gym to uncover fragments of the past. Each memory shifts the protagonist's mental state, and the more disturbing ones you find, the faster Ray's mind decays.</p>
+          <ul class="slots tools"><li>Unity</li><li>C#</li><li>UI design</li><li>dialogue systems</li><li>narrative design</li><li>playtesting</li><li>GitHub</li></ul>
+          <div class="links">
+            <a href="https://github.com/en228-byte/GEIMemories-TheFinalBell" target="_blank" rel="noopener">View on GitHub</a>
+          </div>
+        </div>
+        <div class="did" data-a style="--d:100ms">
+          <h4>What I did</h4>
+          <ul>
+            <li>Built the dialogue system, UI (menus, decay meter, ending screens), memory tracking system, and a dodging minigame in Unity/C#</li>
+            <li>Wrote the complete game script and NPC dialogue for 6 characters, each with personality-driven hint systems</li>
+            <li>Designed the Decay Meter mechanic (good = –5, bad = +5) with three ending thresholds</li>
+            <li>Created dialogue branching logic where accumulated decay shifts the MC's tone from hopeful to paranoid</li>
+            <li>Authored the Layout Document detailing memory logic, decay tables, branching variables, and visual flowcharts</li>
+            <li>Conducted playtesting with 7 external testers; iterated on UI prompts, movement speed, and interaction clarity</li>
+            <li>Managed version control via GitHub with feature branching; used Trello across a 4-sprint cycle</li>
+          </ul>
+        </div>
       </div>
     </div>
 
-    <div class="contrib-head">Highlights</div>
-    <ul class="contrib">
-      <li>Created props, lighting compositions, walk cycles, a Rube Goldberg device, environment scenes, and animated desktop objects</li>
-      <li>Recreated anime scenes (Black Butler, Lucky Star) with full character modeling, rigging, skinning, and animation</li>
-      <li>Midterm: recreated a scene from Black Butler; Final: 50 seconds of Lucky Star cheerleading animation</li>
-      <li>Completed timed challenges — model, skin, rig, and animate a video game character from scratch under time pressure</li>
-    </ul>
+    <div class="p-media field">
+      <div class="wrap">
+        <div class="row" data-a>
+          <figure style="--r:1.7333"><a class="shot" href="images/finalbell4.png"><img src="images/finalbell4.png" width="1456" height="840" alt="The Final Bell character sprites" loading="lazy"></a><figcaption><strong>Character sprites.</strong></figcaption></figure>
+          <figure style="--r:1.7333"><a class="shot" href="images/finalbell5.png"><img src="images/finalbell5.png" width="1456" height="840" alt="The Final Bell background art" loading="lazy"></a><figcaption><strong>Background art.</strong> Classroom, library, cafeteria, gym, principal's office.</figcaption></figure>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap systems">
+      <div data-a>
+        <h4>Memory and decay</h4>
+        <p>Collectible memory fragments shift the protagonist's mental state. Good memories decrease decay by 5, bad memories increase it by 5, and the running total decides which of three endings the player sees. Three endings, five rooms, six NPCs, ten memories.</p>
+      </div>
+      <div data-a style="--d:80ms">
+        <h4>Dialogue and branching</h4>
+        <p>I wrote the full script for 6 characters: Mrs. Nick (gym teacher), Ms. Vale (librarian), Mr. Gray (principal), Lunch Lady Marnie, the Whispering Student and the Janitor's Shadow. Each gives cryptic hints toward good and bad memories. Ray's tone, inner monologue and the environmental audio all shift with the Decay Meter.</p>
+      </div>
+      <div data-a style="--d:160ms">
+        <h4>Three endings</h4>
+        <table class="endings">
+          <thead><tr><th scope="col">Ending</th><th scope="col">Decay</th></tr></thead>
+          <tbody>
+            <tr><td>Acceptance</td><td>20 or less</td></tr>
+            <tr><td>Reflection</td><td>21 to 40</td></tr>
+            <tr><td>Trapped</td><td>41 or more</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </article>
 
-  <!-- ═══════════════ CERTIFICATE ═══════════════ -->
-  <div class="cert-section" data-a>
-    <div class="cert-img">
-      <img src="images/Ibeth_Fernandez.png" alt="YWCC Capstone Showcase Certificate — 3rd Place" loading="lazy">
+  <!-- 3D -->
+  <article class="project" id="3d">
+    <div class="wrap stage-card">
+      <p class="stage" data-a><span class="tag"><span class="v-d">Stage 4</span><span class="v-n">Stage 04</span></span><em><span class="v-d">of 4 · 3D and animation</span><span class="v-n">/ 04</span></em></p>
+      <h3 data-a>3D modeling and animation</h3>
+      <div class="p-head">
+        <div data-a>
+          <p class="meta"><strong>Blender artist</strong>, Spring 2026. IT 270: 3D Modeling &amp; Animation, NJIT.</p>
+          <p class="desc">A portfolio of 3D work covering the full modeling-to-animation pipeline: props, environments, character rigs, walk cycles and scene recreation from anime reference material.</p>
+          <ul class="slots tools"><li>Blender</li><li>3D modeling</li><li>rigging</li><li>skinning</li><li>animation</li><li>lighting</li></ul>
+        </div>
+        <div class="did" data-a style="--d:100ms">
+          <h4>Highlights</h4>
+          <ul>
+            <li>Created props, lighting compositions, walk cycles, a Rube Goldberg device, environment scenes, and animated desktop objects</li>
+            <li>Recreated anime scenes (Black Butler, Lucky Star) with full character modeling, rigging, skinning, and animation</li>
+            <li>Midterm: recreated a scene from Black Butler; Final: 50 seconds of Lucky Star cheerleading animation</li>
+            <li>Completed timed challenges: model, skin, rig, and animate a video game character from scratch under time pressure</li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="cert-text">
-      <h3>3rd Place, YWCC Capstone Showcase</h3>
-      <p>Awarded for outstanding achievement and creative innovation at the Spring 2026 Capstone Showcase at New Jersey Institute of Technology. Presented TeleRehab — a tele-rehabilitation platform for construction workers — signed by Dr. Osama Eljabiri, Capstone Director.</p>
+
+    <div class="p-media field">
+      <div class="wrap">
+        <figure class="video" data-a>
+          <video controls preload="none" poster="images/scene_model.png" width="720" height="406">
+            <source src="images/portfolio_reel_compressed.mp4" type="video/mp4">
+          </video>
+          <figcaption><strong>Portfolio reel.</strong> The full semester, 2 min 23 s.</figcaption>
+        </figure>
+
+        <p class="media-head">Reference and model</p>
+        <div class="row pair" data-a>
+          <figure><a class="shot" href="images/scene_reference.png"><img src="images/scene_reference.png" width="1918" height="813" alt="Black Butler reference scene" loading="lazy" style="object-position:40% 50%"></a><figcaption>Reference</figcaption></figure>
+          <figure><a class="shot" href="images/scene_model.png"><img src="images/scene_model.png" width="1200" height="500" alt="Black Butler scene recreated in Blender" loading="lazy" style="object-position:40% 50%"></a><figcaption><strong>Midterm.</strong> Black Butler scene with chess pieces, lighting and star geometry.</figcaption></figure>
+        </div>
+        <div class="row pair" data-a>
+          <figure><a class="shot" href="images/colorweapon_reference.jpg"><img src="images/colorweapon_reference.jpg" width="736" height="736" alt="Anime scissors weapon reference" loading="lazy"></a><figcaption>Reference</figcaption></figure>
+          <figure><a class="shot" href="images/colorweapon_model.png"><img src="images/colorweapon_model.png" width="1920" height="1080" alt="Textured scissors weapon model" loading="lazy"></a><figcaption><strong>Weapon prop.</strong> Modeled and textured from anime reference.</figcaption></figure>
+        </div>
+        <div class="row pair" data-a>
+          <figure><a class="shot" href="images/relaxing_space_reference.jpg"><img src="images/relaxing_space_reference.jpg" width="709" height="945" alt="Photo of my real desk setup" loading="lazy"></a><figcaption>Reference</figcaption></figure>
+          <figure><a class="shot" href="images/relaxing_space_model.png"><img src="images/relaxing_space_model.png" width="1200" height="700" alt="Desk setup recreated in 3D" loading="lazy"></a><figcaption><strong>Relaxing space.</strong> My actual desk setup in 3D, down to the PC and chair.</figcaption></figure>
+        </div>
+        <div class="row pair" data-a>
+          <figure><a class="shot" href="images/doorknob_reference.jpg"><img src="images/doorknob_reference.jpg" width="1260" height="945" alt="Photo of a real doorknob" loading="lazy"></a><figcaption>Reference</figcaption></figure>
+          <figure><a class="shot" href="images/doorknob_model.png"><img src="images/doorknob_model.png" width="1920" height="1080" alt="Doorknob 3D model" loading="lazy"></a><figcaption><strong>Prop modeling.</strong> Doorknob from a reference photo.</figcaption></figure>
+        </div>
+
+        <p class="media-head">Animations</p>
+        <div class="videos" data-a>
+          <figure class="video"><video controls preload="none" loop poster="images/poster_lucky_star.jpg" width="720" height="406"><source src="images/lucky_star_compressed.mp4" type="video/mp4"></video><figcaption><strong>Final.</strong> Lucky Star cheerleading, 50 s.</figcaption></figure>
+          <figure class="video"><video controls preload="none" loop poster="images/poster_rube_goldberg.jpg" width="720" height="406"><source src="images/rube_goldberg_compressed.mp4" type="video/mp4"></video><figcaption><strong>Rube Goldberg device.</strong></figcaption></figure>
+          <figure class="video"><video controls preload="none" loop poster="images/poster_desktop_object.jpg" width="1920" height="1080"><source src="images/desktop_object.mp4" type="video/mp4"></video><figcaption><strong>Animated desktop object.</strong></figcaption></figure>
+          <figure class="video"><video controls preload="none" loop poster="images/poster_walk_cycle.jpg" width="960" height="540"><source src="images/walk_cycle.mp4" type="video/mp4"></video><figcaption><strong>Walk cycle.</strong></figcaption></figure>
+        </div>
+      </div>
     </div>
+  </article>
+</section>
+
+<!-- TOOLKIT -->
+<section id="toolkit">
+  <div class="wrap">
+    <div class="split-head">
+      <h2 data-a>Toolkit</h2>
+      <p class="section-intro" data-a style="--d:80ms">Design, development and creative tools, built up across UX, game and 3D projects.</p>
+    </div>
+    <dl class="toolkit" data-a style="--d:160ms">
+      <dt>Design and prototyping</dt><dd><ul class="slots"><li>Figma</li><li>FigJam</li><li>wireframing</li><li>high-fidelity prototyping</li><li>user flows</li><li>design systems</li><li>UI design</li></ul></dd>
+      <dt>UX research</dt><dd><ul class="slots"><li>User research</li><li>usability testing</li><li>playtesting</li><li>competitor analysis</li><li>user acceptance testing</li></ul></dd>
+      <dt>Development</dt><dd><ul class="slots"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>SQL</li><li>C# (Unity)</li></ul></dd>
+      <dt>Game design and 3D</dt><dd><ul class="slots"><li>Unity</li><li>Blender</li><li>game design documentation</li><li>narrative design</li><li>dialogue systems</li><li>character rigging</li></ul></dd>
+      <dt>Tools and process</dt><dd><ul class="slots"><li>GitHub</li><li>Scrum/Agile</li><li>Trello</li><li>GitHub Projects</li><li>Microsoft Office</li><li>Google Workspace</li><li>technical writing</li></ul></dd>
+    </dl>
   </div>
 </section>
 
-<!-- SKILLS -->
-<section class="section" id="skills">
-  <div class="section-tag">Toolkit</div>
-  <h2 class="section-title">What I work with</h2>
-  <p class="section-desc">A mix of design, development, and creative tools — built up across UX, game, and 3D projects.</p>
-  <div class="skills-grid">
-    <div class="skill-card" data-a>
-      <div class="skill-icon">🎨</div>
-      <div class="skill-name">Design &amp; Prototyping</div>
-      <div class="skill-items">Figma · FigJam · Wireframing · High-Fidelity Prototyping · User Flows · Design Systems · UI Design</div>
-    </div>
-    <div class="skill-card" data-a>
-      <div class="skill-icon">🔍</div>
-      <div class="skill-name">UX Research</div>
-      <div class="skill-items">User Research · Usability Testing · Playtesting · Competitor Analysis · User Acceptance Testing</div>
-    </div>
-    <div class="skill-card" data-a>
-      <div class="skill-icon">💻</div>
-      <div class="skill-name">Development</div>
-      <div class="skill-items">HTML · CSS · JavaScript · SQL · C# (Unity)</div>
-    </div>
-    <div class="skill-card" data-a>
-      <div class="skill-icon">🎮</div>
-      <div class="skill-name">Game Design &amp; 3D</div>
-      <div class="skill-items">Unity · Blender · Game Design Documentation · Narrative Design · Dialogue Systems · Character Rigging</div>
-    </div>
-    <div class="skill-card" data-a>
-      <div class="skill-icon">⚙️</div>
-      <div class="skill-name">Tools &amp; Process</div>
-      <div class="skill-items">GitHub · Scrum/Agile · Trello · GitHub Projects · Microsoft Office · Google Workspace · Technical Writing</div>
-    </div>
-  </div>
-</section>
+</main>
 
 <!-- CONTACT -->
-<section class="section" id="contact">
-  <div class="contact-wrap" data-a>
-    <div class="section-tag">Let's connect</div>
-    <h2 class="section-title">Say hello</h2>
-    <p>I'm looking for opportunities in UX design, game design, and creative technology. Whether it's a role, a collaboration, or just a conversation — I'd love to hear from you.</p>
-    <div class="contact-links">
-      <a href="mailto:i.fernandez.designs@gmail.com" class="btn btn-primary contact-email">i.fernandez.designs@gmail.com</a>
-      <a href="https://linkedin.com/in/ibethf039008" target="_blank" class="btn btn-ghost">LinkedIn →</a>
+<footer class="contact field" id="contact">
+  <div class="wrap">
+    <h2 data-a>Get in touch</h2>
+    <p class="section-intro" data-a style="--d:80ms">I'm looking for roles in UX design, game design and creative technology. A role, a collaboration or just a conversation, I'd love to hear from you.</p>
+    <a class="email" href="mailto:i.fernandez.designs@gmail.com" data-a style="--d:160ms">i.fernandez.designs@<wbr>gmail.com</a>
+    <div class="contact-more" data-a style="--d:220ms">
+      <a href="https://linkedin.com/in/ibethf039008" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://ilf39.itch.io/fractured-wonderland" target="_blank" rel="noopener">itch.io</a>
+    </div>
+    <div class="footer">
+      <span>© 2026 Ibeth Fernandez</span>
+      <a href="#top">Back to top</a>
     </div>
   </div>
-</section>
-
-<footer class="footer">
-  © 2026 Ibeth Fernandez. Designed &amp; built with <span>♥</span> and way too much caffeine.
 </footer>
 
+<!-- THE FLIP -->
+<div class="veil" id="veil" aria-hidden="true" hidden><span></span></div>
+
 <!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-  <button class="lightbox-close" id="lb-close">✕</button>
-  <img id="lb-img" src="" alt="">
-  <div class="lightbox-cap" id="lb-cap"></div>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="btn lightbox-close" id="lb-close" aria-label="Close image viewer">Close</button>
+  <p class="lightbox-cap" id="lb-cap"></p>
 </div>
 
 <script>
-// Scroll nav
-const nav=document.getElementById('nav');
-window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60));
-
-// Scroll reveal
-const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('vis');obs.unobserve(el.target)}})},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+// Entrances: each part pops up once as it arrives
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}})},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
 document.querySelectorAll('[data-a]').forEach(el=>obs.observe(el));
 
-// Stagger skill cards
-document.querySelectorAll('.skill-card').forEach((c,i)=>c.style.transitionDelay=i*80+'ms');
+// World switch: the cherry sweep covers the screen, the world changes behind it, the sweep leaves
+const root=document.documentElement,sw=document.getElementById('switch'),veil=document.getElementById('veil'),live=document.getElementById('world-live');
+const still=matchMedia('(prefers-reduced-motion: reduce)');
+const isNightmare=()=>root.dataset.world==='nightmare';
+let busy=false;
+function setWorld(w){
+  root.dataset.world=w;
+  try{sessionStorage.setItem('world',w)}catch(e){}
+  live.textContent=w==='nightmare'?'Nightmare state':'Dream state';
+}
+// Timers, not animation promises, drive the steps, so the world always changes even if a frame is dropped
+function sweep(from,to){veil.animate([{transform:`translateX(${from}) skewX(-12deg)`},{transform:`translateX(${to}) skewX(-12deg)`}],{duration:420,easing:'cubic-bezier(.7,0,.3,1)',fill:'forwards'})}
+sw.addEventListener('click',()=>{
+  const next=isNightmare()?'dream':'nightmare';
+  if(still.matches||!veil.animate){setWorld(next);return}
+  if(busy)return;busy=true;
+  veil.firstChild.textContent=next==='nightmare'?'Nightmare':'Dream';
+  veil.hidden=false;
+  sweep('-120%','0');
+  setTimeout(()=>{
+    setWorld(next);
+    setTimeout(()=>{
+      sweep('0','120%');
+      setTimeout(()=>{veil.hidden=true;busy=false},440);
+    },200);
+  },440);
+});
 
-// LIGHTBOX
-const lb=document.getElementById('lightbox');
-const lbImg=document.getElementById('lb-img');
-const lbCap=document.getElementById('lb-cap');
-
-function openLB(src,alt){
-  lbImg.src=src;
-  lbCap.textContent=alt||'';
-  lbCap.style.display=alt?'block':'none';
-  // Wait for image to load, then cap at native resolution
-  lbImg.onload=function(){
-    lbImg.style.maxWidth=Math.min(this.naturalWidth, window.innerWidth*.92)+'px';
-  };
+// Lightbox: every picture is a link to its full-size file, so it still works without script
+const lb=document.getElementById('lightbox'),lbCap=document.getElementById('lb-cap'),lbClose=document.getElementById('lb-close');
+const lbImg=document.createElement('img');
+lb.insertBefore(lbImg,lbCap);
+let lastFocus=null;
+function openLB(src,alt,cap,turned){
+  lastFocus=document.activeElement;
+  lbImg.src=src;lbImg.alt=alt||'';
+  lbImg.style.transform=turned?'rotate(180deg)':'';
+  lbCap.textContent=cap||alt||'';
+  lbImg.onload=()=>{lbImg.style.maxWidth=Math.min(lbImg.naturalWidth,innerWidth*.92)+'px'};
   lb.classList.add('open');
   document.body.style.overflow='hidden';
+  lbClose.focus();
 }
-
 function closeLB(){
+  if(!lb.classList.contains('open'))return;
   lb.classList.remove('open');
   document.body.style.overflow='';
-  setTimeout(()=>{lbImg.src='';lbImg.style.maxWidth=''},300);
+  setTimeout(()=>{lbImg.removeAttribute('src');lbImg.style.maxWidth=''},250);
+  if(lastFocus)lastFocus.focus();
 }
-
-// Click on .img-card images
-document.querySelectorAll('.img-card').forEach(card=>{
-  card.addEventListener('click',()=>{
-    const img=card.querySelector('img');
-    if(img) openLB(img.src, img.alt);
+document.querySelectorAll('a.shot').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const img=a.querySelector('img');
+    const cap=a.closest('figure')?.querySelector('figcaption')?.innerText;
+    openLB(a.href,img?.alt,cap&&cap!=='Reference'?cap:img?.alt,a.classList.contains('cards')&&isNightmare());
   });
 });
-
-// Click on .process-card images
-document.querySelectorAll('.process-card').forEach(card=>{
-  card.addEventListener('click',()=>{
-    const src=card.dataset.src||card.querySelector('img')?.src;
-    const cap=card.dataset.lb||card.querySelector('img')?.alt||'';
-    if(src) openLB(src, cap);
-  });
-});
-
-// Click on .compare-side images
-document.querySelectorAll('.compare-side').forEach(side=>{
-  side.addEventListener('click',()=>{
-    const src=side.dataset.src||side.querySelector('img')?.src;
-    const cap=side.dataset.lb||side.querySelector('img')?.alt||'';
-    if(src) openLB(src, cap);
-  });
-});
-
-// Close lightbox
-document.getElementById('lb-close').addEventListener('click',closeLB);
+lbClose.addEventListener('click',closeLB);
 lb.addEventListener('click',e=>{if(e.target===lb)closeLB()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLB()});
 </script>
